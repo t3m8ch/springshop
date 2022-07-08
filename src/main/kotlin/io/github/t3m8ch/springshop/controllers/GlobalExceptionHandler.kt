@@ -1,6 +1,6 @@
 package io.github.t3m8ch.springshop.controllers
 
-import io.github.t3m8ch.springshop.exceptions.APIErrorBody
+import io.github.t3m8ch.springshop.dto.APIErrorBody
 import io.github.t3m8ch.springshop.exceptions.BaseAPIException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice

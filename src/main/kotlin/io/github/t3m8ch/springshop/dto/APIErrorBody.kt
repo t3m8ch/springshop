@@ -1,4 +1,4 @@
-package io.github.t3m8ch.springshop.exceptions
+package io.github.t3m8ch.springshop.dto
 
 data class APIErrorBody(
     val errorCode: String,
