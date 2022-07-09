@@ -8,7 +8,9 @@ import java.util.*
 class CategoryIsRemovedException(id: UUID) : BaseAPIException(
     HttpStatus.LOCKED,
     APIErrorBody(
-        errorCode = "CATEGORY_REMOVED",
+        errorCode = ERROR_CODE,
         description = "Category with ID = $id is removed"
     )
-)
+) {
+    companion object { const val ERROR_CODE = "CATEGORY_REMOVED" }
+}

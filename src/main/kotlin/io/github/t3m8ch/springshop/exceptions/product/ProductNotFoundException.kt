@@ -8,7 +8,9 @@ import java.util.*
 class ProductNotFoundException(id: UUID) : BaseAPIException(
     HttpStatus.NOT_FOUND,
     APIErrorBody(
-        "PRODUCT_NOT_FOUND",
+        PRODUCT_NOT_FOUND,
         "Product with ID = $id not found"
     ),
-)
+) {
+    companion object { const val PRODUCT_NOT_FOUND = "PRODUCT_NOT_FOUND" }
+}

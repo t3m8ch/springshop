@@ -8,7 +8,9 @@ import java.util.*
 class ProductIsRemovedException(id: UUID) : BaseAPIException(
     HttpStatus.LOCKED,
     APIErrorBody(
-        "PRODUCT_REMOVED",
+        PRODUCT_REMOVED,
         "Product with ID = $id is removed"
     ),
-)
+) {
+    companion object { const val PRODUCT_REMOVED = "PRODUCT_REMOVED"}
+}

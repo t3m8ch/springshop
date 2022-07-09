@@ -8,7 +8,9 @@ import java.util.*
 class ProductIsNotRemovedException(id: UUID) : BaseAPIException(
     HttpStatus.CONFLICT,
     APIErrorBody(
-        "PRODUCT_NOT_REMOVED",
+        PRODUCT_NOT_REMOVED,
         "Product with ID = $id is not removed"
     ),
-)
+) {
+    companion object { const val PRODUCT_NOT_REMOVED = "PRODUCT_NOT_REMOVED" }
+}
