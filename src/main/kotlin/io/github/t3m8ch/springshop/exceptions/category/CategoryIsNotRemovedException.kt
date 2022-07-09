@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus
 import java.util.*
 
 class CategoryIsNotRemovedException(id: UUID) : BaseAPIException(
-    HttpStatus.NOT_FOUND,
+    HttpStatus.CONFLICT,
     APIErrorBody(
         ERROR_CODE,
         "Category with ID = $id isn't removed"

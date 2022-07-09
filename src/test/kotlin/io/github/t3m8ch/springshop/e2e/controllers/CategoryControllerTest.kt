@@ -363,7 +363,7 @@ class CategoryControllerTest(
         `when`(categoryService.restoreById(id)).thenThrow(CategoryIsNotRemovedException(id))
 
         mockMvc.perform(patch("/api/v1/categories/$id/restore"))
-            .andExpect(status().isNotFound)
+            .andExpect(status().isConflict)
             .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_REMOVED")))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
