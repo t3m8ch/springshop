@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.t3m8ch.springshop.controllers.CategoryController
 import io.github.t3m8ch.springshop.dto.CategoryOutDTO
 import io.github.t3m8ch.springshop.dto.CreateUpdateCategoryDTO
-import io.github.t3m8ch.springshop.exceptions.CategoryIsNotRemovedException
-import io.github.t3m8ch.springshop.exceptions.CategoryIsRemovedException
-import io.github.t3m8ch.springshop.exceptions.CategoryNotFoundException
+import io.github.t3m8ch.springshop.exceptions.category.CategoryIsNotRemovedException
+import io.github.t3m8ch.springshop.exceptions.category.CategoryIsRemovedException
+import io.github.t3m8ch.springshop.exceptions.category.CategoryNotFoundException
 import io.github.t3m8ch.springshop.services.interfaces.CategoryService
 import isNotEmptyString
 import org.hamcrest.CoreMatchers.`is`

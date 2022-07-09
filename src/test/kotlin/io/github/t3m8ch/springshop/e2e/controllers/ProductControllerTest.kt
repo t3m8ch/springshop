@@ -5,7 +5,11 @@ import io.github.t3m8ch.springshop.controllers.ProductController
 import io.github.t3m8ch.springshop.dto.CategoryInProductDTO
 import io.github.t3m8ch.springshop.dto.CreateUpdateProductDTO
 import io.github.t3m8ch.springshop.dto.ProductOutDTO
-import io.github.t3m8ch.springshop.exceptions.*
+import io.github.t3m8ch.springshop.exceptions.category.CategoryIsRemovedException
+import io.github.t3m8ch.springshop.exceptions.category.CategoryNotFoundException
+import io.github.t3m8ch.springshop.exceptions.product.ProductIsNotRemovedException
+import io.github.t3m8ch.springshop.exceptions.product.ProductIsRemovedException
+import io.github.t3m8ch.springshop.exceptions.product.ProductNotFoundException
 import io.github.t3m8ch.springshop.services.interfaces.ProductService
 import isNotEmptyString
 import org.hamcrest.CoreMatchers.*
