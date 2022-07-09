@@ -7,9 +7,8 @@ import io.github.t3m8ch.springshop.dto.CreateUpdateCategoryDTO
 import io.github.t3m8ch.springshop.exceptions.CategoryIsRemovedException
 import io.github.t3m8ch.springshop.exceptions.CategoryNotFoundException
 import io.github.t3m8ch.springshop.services.interfaces.CategoryService
+import isNotEmptyString
 import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.Matchers.emptyString
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
@@ -321,5 +320,3 @@ class CategoryControllerTest(
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 }
-
-private fun isNotEmptyString() = `is`(not(emptyString()))
