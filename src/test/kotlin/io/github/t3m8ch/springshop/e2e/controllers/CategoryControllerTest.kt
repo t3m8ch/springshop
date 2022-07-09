@@ -98,7 +98,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(get("/api/v1/categories/$id"))
             .andExpect(status().isNotFound)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -109,7 +109,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(get("/api/v1/categories/$id"))
             .andExpect(status().isLocked)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -194,7 +194,7 @@ class CategoryControllerTest(
                     .content(objectMapper.writeValueAsString(createDTO))
             )
             .andExpect(status().isNotFound)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -215,7 +215,7 @@ class CategoryControllerTest(
                     .content(objectMapper.writeValueAsString(createDTO))
             )
             .andExpect(status().isLocked)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -253,7 +253,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(delete("/api/v1/categories/$id"))
             .andExpect(status().isNotFound)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -265,7 +265,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(delete("/api/v1/categories/$id"))
             .andExpect(status().isLocked)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -305,7 +305,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(delete("/api/v1/categories/$id/hard"))
             .andExpect(status().isNotFound)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -317,7 +317,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(delete("/api/v1/categories/$id/hard"))
             .andExpect(status().isLocked)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -352,7 +352,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(patch("/api/v1/categories/$id/restore"))
             .andExpect(status().isNotFound)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -364,7 +364,7 @@ class CategoryControllerTest(
 
         mockMvc.perform(patch("/api/v1/categories/$id/restore"))
             .andExpect(status().isConflict)
-            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_REMOVED")))
+            .andExpect(jsonPath("\$.errorCode", `is`(CategoryIsNotRemovedException.ERROR_CODE)))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 }

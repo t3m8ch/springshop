@@ -149,7 +149,7 @@ class ProductControllerTest(
 
         mockMvc.perform(get("/api/v1/products?categoryId=$categoryId"))
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -161,7 +161,7 @@ class ProductControllerTest(
 
         mockMvc.perform(get("/api/v1/products?categoryId=$categoryId"))
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -213,7 +213,7 @@ class ProductControllerTest(
 
         mockMvc.perform(get("/api/v1/products/$productId"))
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -225,7 +225,7 @@ class ProductControllerTest(
 
         mockMvc.perform(get("/api/v1/products/$productId"))
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -301,7 +301,7 @@ class ProductControllerTest(
                     .content(objectMapper.writeValueAsString(createDTO))
             )
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -325,7 +325,7 @@ class ProductControllerTest(
                     .content(objectMapper.writeValueAsString(createDTO))
             )
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -403,7 +403,7 @@ class ProductControllerTest(
                     .content(objectMapper.writeValueAsString(updateDTO))
             )
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -428,7 +428,7 @@ class ProductControllerTest(
                     .content(objectMapper.writeValueAsString(updateDTO))
             )
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -453,7 +453,7 @@ class ProductControllerTest(
                     .content(objectMapper.writeValueAsString(updateDTO))
             )
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(CategoryNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -478,7 +478,7 @@ class ProductControllerTest(
                     .content(objectMapper.writeValueAsString(updateDTO))
             )
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -528,7 +528,7 @@ class ProductControllerTest(
         `when`(productService.removeById(productId)).thenThrow(ProductNotFoundException(productId))
         mockMvc.perform(delete("/api/v1/products/$productId"))
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -538,7 +538,7 @@ class ProductControllerTest(
         `when`(productService.removeById(productId)).thenThrow(ProductIsRemovedException(productId))
         mockMvc.perform(delete("/api/v1/products/$productId"))
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -588,7 +588,7 @@ class ProductControllerTest(
         `when`(productService.deleteById(productId)).thenThrow(ProductNotFoundException(productId))
         mockMvc.perform(delete("/api/v1/products/$productId/hard"))
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -598,7 +598,7 @@ class ProductControllerTest(
         `when`(productService.deleteById(productId)).thenThrow(ProductIsRemovedException(productId))
         mockMvc.perform(delete("/api/v1/products/$productId/hard"))
             .andExpect(status().isLocked)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductIsRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -648,7 +648,7 @@ class ProductControllerTest(
         `when`(productService.restoreById(productId)).thenThrow(ProductNotFoundException(productId))
         mockMvc.perform(patch("/api/v1/products/$productId/restore"))
             .andExpect(status().isNotFound)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_NOT_FOUND")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductNotFoundException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 
@@ -658,7 +658,7 @@ class ProductControllerTest(
         `when`(productService.restoreById(productId)).thenThrow(ProductIsNotRemovedException(productId))
         mockMvc.perform(patch("/api/v1/products/$productId/restore"))
             .andExpect(status().isConflict)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`("PRODUCT_NOT_REMOVED")))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.errorCode", `is`(ProductIsNotRemovedException.ERROR_CODE)))
             .andExpect(MockMvcResultMatchers.jsonPath("\$.description", isNotEmptyString()))
     }
 }
