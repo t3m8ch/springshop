@@ -31,4 +31,8 @@ class CategoryServiceImpl : CategoryService {
     override fun delete(id: UUID): CategoryOutDTO {
         TODO("Not yet implemented")
     }
+
+    override fun restoreById(id: UUID): CategoryOutDTO {
+        TODO("Not yet implemented")
+    }
 }

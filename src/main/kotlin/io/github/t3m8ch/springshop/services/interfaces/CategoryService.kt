@@ -11,4 +11,5 @@ interface CategoryService {
     fun updateById(id: UUID, dto: CreateUpdateCategoryDTO): CategoryOutDTO
     fun remove(id: UUID): CategoryOutDTO
     fun delete(id: UUID): CategoryOutDTO
+    fun restoreById(id: UUID): CategoryOutDTO
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.t3m8ch.springshop.controllers.CategoryController
 import io.github.t3m8ch.springshop.dto.CategoryOutDTO
 import io.github.t3m8ch.springshop.dto.CreateUpdateCategoryDTO
+import io.github.t3m8ch.springshop.exceptions.CategoryIsNotRemovedException
 import io.github.t3m8ch.springshop.exceptions.CategoryIsRemovedException
 import io.github.t3m8ch.springshop.exceptions.CategoryNotFoundException
 import io.github.t3m8ch.springshop.services.interfaces.CategoryService
@@ -317,6 +318,53 @@ class CategoryControllerTest(
         mockMvc.perform(delete("/api/v1/categories/$id/hard"))
             .andExpect(status().isLocked)
             .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_REMOVED")))
+            .andExpect(jsonPath("\$.description", isNotEmptyString()))
+    }
+
+    @Test
+    fun `test restoreById`() {
+        val id = UUID.fromString("82abd6fb-5b70-4ba8-a6d4-dd877deb5eb7")
+        val dateString = "2000-01-01T00:00:00Z"
+        val date = ZonedDateTime.parse(dateString)
+        val name = "Phones"
+
+        val expectedJSON = mapOf(
+            "id" to id.toString(),
+            "createdAt" to dateString,
+            "updatedAt" to dateString,
+            "name" to name,
+        )
+
+        val outDTO = CategoryOutDTO(id, date, date, name)
+
+        `when`(categoryService.restoreById(id)).thenReturn(outDTO)
+
+        mockMvc.perform(patch("/api/v1/categories/$id/restore"))
+            .andExpect(status().isOk)
+            .andExpect(content().json(objectMapper.writeValueAsString(expectedJSON)))
+    }
+
+    @Test
+    fun `test restoreById, if category not found`() {
+        val id = UUID.fromString("82abd6fb-5b70-4ba8-a6d4-dd877deb5eb7")
+
+        `when`(categoryService.restoreById(id)).thenThrow(CategoryNotFoundException(id))
+
+        mockMvc.perform(patch("/api/v1/categories/$id/restore"))
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_FOUND")))
+            .andExpect(jsonPath("\$.description", isNotEmptyString()))
+    }
+
+    @Test
+    fun `test restoreById, if category isn't removed`() {
+        val id = UUID.fromString("82abd6fb-5b70-4ba8-a6d4-dd877deb5eb7")
+
+        `when`(categoryService.restoreById(id)).thenThrow(CategoryIsNotRemovedException(id))
+
+        mockMvc.perform(patch("/api/v1/categories/$id/restore"))
+            .andExpect(status().isNotFound)
+            .andExpect(jsonPath("\$.errorCode", `is`("CATEGORY_NOT_REMOVED")))
             .andExpect(jsonPath("\$.description", isNotEmptyString()))
     }
 }

@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-// TODO: Add validation for endpoints
-
 @RestController
 @RequestMapping("api/v1/categories")
 class CategoryController(private val categoryService: CategoryService) {
@@ -42,7 +40,7 @@ class CategoryController(private val categoryService: CategoryService) {
     }
 
     @PatchMapping("{id}/restore")
-    fun restoreById(@PathVariable id: String): CategoryOutDTO {
-        TODO("Not implemented")
+    fun restoreById(@PathVariable id: UUID): CategoryOutDTO {
+        return categoryService.restoreById(id)
     }
 }

@@ -7,7 +7,9 @@ import java.util.*
 class CategoryNotFoundException(id: UUID) : BaseAPIException(
     HttpStatus.NOT_FOUND,
     APIErrorBody(
-        "CATEGORY_NOT_FOUND",
+        ERROR_CODE,
         "Category with ID = $id not found"
     )
-)
+) {
+    companion object { const val ERROR_CODE = "CATEGORY_NOT_FOUND" }
+}
