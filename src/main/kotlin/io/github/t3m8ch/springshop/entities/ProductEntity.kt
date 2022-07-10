@@ -1,6 +1,7 @@
 package io.github.t3m8ch.springshop.entities
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType
+import io.github.t3m8ch.springshop.CharacteristicsType
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.TypeDef
@@ -36,7 +37,7 @@ class ProductEntity(
 
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb", nullable = false)
-    var characteristics: Map<String, String>,
+    var characteristics: CharacteristicsType,
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

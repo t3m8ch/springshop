@@ -1,10 +1,9 @@
 package io.github.t3m8ch.springshop.dto
 
+import io.github.t3m8ch.springshop.CharacteristicsType
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
-
-typealias CharacteristicsType = Map<String, String>
 
 data class ProductOutDTO(
     val id: UUID,
