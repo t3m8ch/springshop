@@ -21,7 +21,9 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     }
 
     override fun getById(id: UUID): CategoryOutDTO {
-        return categoryRepository.findByIdOrNull(id)?.mapToOutDTO() ?: throw CategoryNotFoundException(id)
+        val category = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        if (category.isRemoved) throw CategoryIsRemovedException(id)
+        return category.mapToOutDTO()
     }
 
     @Transactional
@@ -30,22 +32,24 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     }
 
     override fun updateById(id: UUID, dto: CreateUpdateCategoryDTO): CategoryOutDTO {
-        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
-        entity.name = dto.name
-        return categoryRepository.save(entity).mapToOutDTO()
+        val category = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        if (category.isRemoved) throw CategoryIsRemovedException(id)
+
+        category.name = dto.name
+        return categoryRepository.save(category).mapToOutDTO()
     }
 
     override fun remove(id: UUID): CategoryOutDTO {
-        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
-        if (entity.isRemoved) throw CategoryIsRemovedException(id)
-        entity.isRemoved = true
-        return categoryRepository.save(entity).mapToOutDTO()
+        val category = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        if (category.isRemoved) throw CategoryIsRemovedException(id)
+        category.isRemoved = true
+        return categoryRepository.save(category).mapToOutDTO()
     }
 
     override fun delete(id: UUID): CategoryOutDTO {
-        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
-        categoryRepository.delete(entity)
-        return entity.mapToOutDTO()
+        val category = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        categoryRepository.delete(category)
+        return category.mapToOutDTO()
     }
 
     override fun restoreById(id: UUID): CategoryOutDTO {
