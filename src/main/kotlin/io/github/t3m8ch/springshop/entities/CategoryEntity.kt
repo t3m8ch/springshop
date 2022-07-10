@@ -23,7 +23,7 @@ class CategoryEntity(
     @Column(name = "name_", nullable = false)
     var name: String,
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = [CascadeType.PERSIST])
     var products: List<ProductEntity> = emptyList(),
 
     var isRemoved: Boolean = false,

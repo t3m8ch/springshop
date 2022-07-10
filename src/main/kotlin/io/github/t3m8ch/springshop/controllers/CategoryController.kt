@@ -31,12 +31,12 @@ class CategoryController(private val categoryService: CategoryService) {
 
     @DeleteMapping("{id}")
     fun removeById(@PathVariable id: UUID): CategoryOutDTO {
-        return categoryService.remove(id)
+        return categoryService.removeById(id)
     }
 
     @DeleteMapping("{id}/hard")
     fun deleteById(@PathVariable id: UUID): CategoryOutDTO {
-        return categoryService.delete(id)
+        return categoryService.deleteById(id)
     }
 
     @PatchMapping("{id}/restore")

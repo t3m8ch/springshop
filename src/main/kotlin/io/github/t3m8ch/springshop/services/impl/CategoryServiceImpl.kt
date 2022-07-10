@@ -39,14 +39,14 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
         return categoryRepository.save(category).mapToOutDTO()
     }
 
-    override fun remove(id: UUID): CategoryOutDTO {
+    override fun removeById(id: UUID): CategoryOutDTO {
         val category = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
         if (category.isRemoved) throw CategoryIsRemovedException(id)
         category.isRemoved = true
         return categoryRepository.save(category).mapToOutDTO()
     }
 
-    override fun delete(id: UUID): CategoryOutDTO {
+    override fun deleteById(id: UUID): CategoryOutDTO {
         val category = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
         categoryRepository.delete(category)
         return category.mapToOutDTO()
