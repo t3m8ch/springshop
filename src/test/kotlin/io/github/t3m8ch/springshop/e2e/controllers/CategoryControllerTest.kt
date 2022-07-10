@@ -310,18 +310,6 @@ class CategoryControllerTest(
     }
 
     @Test
-    fun `test deleteById, if category is removed`() {
-        val id = UUID.fromString("1343b9dd-3d56-496d-890f-0408f081d13e")
-
-        `when`(categoryService.delete(id)).thenThrow(CategoryIsRemovedException(id))
-
-        mockMvc.perform(delete("/api/v1/categories/$id/hard"))
-            .andExpect(status().isLocked)
-            .andExpect(jsonPath("\$.errorCode", `is`(CategoryIsRemovedException.ERROR_CODE)))
-            .andExpect(jsonPath("\$.description", isNotEmptyString()))
-    }
-
-    @Test
     fun `test restoreById`() {
         val id = UUID.fromString("82abd6fb-5b70-4ba8-a6d4-dd877deb5eb7")
         val dateString = "2000-01-01T00:00:00Z"
