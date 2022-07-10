@@ -2,37 +2,56 @@ package io.github.t3m8ch.springshop.services.impl
 
 import io.github.t3m8ch.springshop.dto.CategoryOutDTO
 import io.github.t3m8ch.springshop.dto.CreateUpdateCategoryDTO
+import io.github.t3m8ch.springshop.entities.CategoryEntity
+import io.github.t3m8ch.springshop.exceptions.category.CategoryIsNotRemovedException
+import io.github.t3m8ch.springshop.exceptions.category.CategoryIsRemovedException
+import io.github.t3m8ch.springshop.exceptions.category.CategoryNotFoundException
+import io.github.t3m8ch.springshop.mapToOutDTO
+import io.github.t3m8ch.springshop.repositories.CategoryRepository
 import io.github.t3m8ch.springshop.services.interfaces.CategoryService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
-class CategoryServiceImpl : CategoryService {
+class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : CategoryService {
     override fun getAll(): List<CategoryOutDTO> {
-        TODO("Not yet implemented")
+        return categoryRepository.findAllByIsRemoved(false).map { it.mapToOutDTO() }
     }
 
     override fun getById(id: UUID): CategoryOutDTO {
-        TODO("Not yet implemented")
+        return categoryRepository.findByIdOrNull(id)?.mapToOutDTO() ?: throw CategoryNotFoundException(id)
     }
 
+    @Transactional
     override fun create(dto: CreateUpdateCategoryDTO): CategoryOutDTO {
-        TODO("Not yet implemented")
+        return categoryRepository.save(CategoryEntity(name = dto.name)).mapToOutDTO()
     }
 
     override fun updateById(id: UUID, dto: CreateUpdateCategoryDTO): CategoryOutDTO {
-        TODO("Not yet implemented")
+        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        entity.name = dto.name
+        return categoryRepository.save(entity).mapToOutDTO()
     }
 
     override fun remove(id: UUID): CategoryOutDTO {
-        TODO("Not yet implemented")
+        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        if (entity.isRemoved) throw CategoryIsRemovedException(id)
+        entity.isRemoved = true
+        return categoryRepository.save(entity).mapToOutDTO()
     }
 
     override fun delete(id: UUID): CategoryOutDTO {
-        TODO("Not yet implemented")
+        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        categoryRepository.delete(entity)
+        return entity.mapToOutDTO()
     }
 
     override fun restoreById(id: UUID): CategoryOutDTO {
-        TODO("Not yet implemented")
+        val entity = categoryRepository.findByIdOrNull(id) ?: throw CategoryNotFoundException(id)
+        if (!entity.isRemoved) throw CategoryIsNotRemovedException(id)
+        entity.isRemoved = false
+        return categoryRepository.save(entity).mapToOutDTO()
     }
 }
