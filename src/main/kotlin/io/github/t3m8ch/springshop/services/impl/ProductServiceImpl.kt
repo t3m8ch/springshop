@@ -1,7 +1,8 @@
-package io.github.t3m8ch.springshop.services.interfaces
+package io.github.t3m8ch.springshop.services.impl
 
 import io.github.t3m8ch.springshop.dto.CreateUpdateProductDTO
 import io.github.t3m8ch.springshop.dto.ProductOutDTO
+import io.github.t3m8ch.springshop.services.interfaces.ProductService
 import org.springframework.stereotype.Service
 import java.util.*
 
