@@ -238,7 +238,7 @@ class CategoryControllerTest(
             updatedAt = ZonedDateTime.parse(dateString),
             name = name,
         )
-        `when`(categoryService.remove(UUID.fromString(idString))).thenReturn(outDTO)
+        `when`(categoryService.removeById(UUID.fromString(idString))).thenReturn(outDTO)
 
         mockMvc.perform(delete("/api/v1/categories/$idString"))
             .andExpect(status().isOk)
@@ -249,7 +249,7 @@ class CategoryControllerTest(
     fun `test removeById, if category not found`() {
         val id = UUID.fromString("1343b9dd-3d56-496d-890f-0408f081d13e")
 
-        `when`(categoryService.remove(id)).thenThrow(CategoryNotFoundException(id))
+        `when`(categoryService.removeById(id)).thenThrow(CategoryNotFoundException(id))
 
         mockMvc.perform(delete("/api/v1/categories/$id"))
             .andExpect(status().isNotFound)
@@ -261,7 +261,7 @@ class CategoryControllerTest(
     fun `test removeById, if category is removed`() {
         val id = UUID.fromString("1343b9dd-3d56-496d-890f-0408f081d13e")
 
-        `when`(categoryService.remove(id)).thenThrow(CategoryIsRemovedException(id))
+        `when`(categoryService.removeById(id)).thenThrow(CategoryIsRemovedException(id))
 
         mockMvc.perform(delete("/api/v1/categories/$id"))
             .andExpect(status().isLocked)
@@ -290,7 +290,7 @@ class CategoryControllerTest(
             updatedAt = ZonedDateTime.parse(dateString),
             name = name,
         )
-        `when`(categoryService.delete(UUID.fromString(idString))).thenReturn(outDTO)
+        `when`(categoryService.deleteById(UUID.fromString(idString))).thenReturn(outDTO)
 
         mockMvc.perform(delete("/api/v1/categories/$idString/hard"))
             .andExpect(status().isOk)
@@ -301,7 +301,7 @@ class CategoryControllerTest(
     fun `test deleteById, if category not found`() {
         val id = UUID.fromString("1343b9dd-3d56-496d-890f-0408f081d13e")
 
-        `when`(categoryService.delete(id)).thenThrow(CategoryNotFoundException(id))
+        `when`(categoryService.deleteById(id)).thenThrow(CategoryNotFoundException(id))
 
         mockMvc.perform(delete("/api/v1/categories/$id/hard"))
             .andExpect(status().isNotFound)

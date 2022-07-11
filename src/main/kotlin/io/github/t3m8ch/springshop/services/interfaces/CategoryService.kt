@@ -9,7 +9,7 @@ interface CategoryService {
     fun getById(id: UUID): CategoryOutDTO
     fun create(dto: CreateUpdateCategoryDTO): CategoryOutDTO
     fun updateById(id: UUID, dto: CreateUpdateCategoryDTO): CategoryOutDTO
-    fun remove(id: UUID): CategoryOutDTO
-    fun delete(id: UUID): CategoryOutDTO
+    fun removeById(id: UUID): CategoryOutDTO
+    fun deleteById(id: UUID): CategoryOutDTO
     fun restoreById(id: UUID): CategoryOutDTO
 }
