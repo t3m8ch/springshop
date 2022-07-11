@@ -94,11 +94,21 @@ private val dangerousThings = listOf(
 )
 
 private val categories = listOf(
-    CategoryEntity(id = usedUUIDs[0], name = "Phones", isRemoved = false, products = phones),
-    CategoryEntity(id = usedUUIDs[1], name = "Headphones", isRemoved = false, products = headphones),
+    CategoryEntity(id = usedUUIDs[0], name = "Phones", isRemoved = false, products = phones.toMutableList()),
+    CategoryEntity(id = usedUUIDs[1], name = "Headphones", isRemoved = false, products = headphones.toMutableList()),
     CategoryEntity(id = usedUUIDs[2], name = "Watches", isRemoved = false),
-    CategoryEntity(id = usedUUIDs[3], name = "Poor quality things", isRemoved = true, products = poorQualityThings),
-    CategoryEntity(id = usedUUIDs[4], name = "Dangerous things", isRemoved = true, products = dangerousThings),
+    CategoryEntity(
+        id = usedUUIDs[3],
+        name = "Poor quality things",
+        isRemoved = true,
+        products = poorQualityThings.toMutableList()
+    ),
+    CategoryEntity(
+        id = usedUUIDs[4],
+        name = "Dangerous things",
+        isRemoved = true,
+        products = dangerousThings.toMutableList()
+    ),
 )
 
 @SpringBootTest

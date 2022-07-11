@@ -24,7 +24,7 @@ class CategoryEntity(
     var name: String,
 
     @OneToMany(mappedBy = "category", cascade = [CascadeType.PERSIST])
-    var products: List<ProductEntity> = emptyList(),
+    var products: MutableList<ProductEntity> = mutableListOf(),
 
     var isRemoved: Boolean = false,
 ) {
