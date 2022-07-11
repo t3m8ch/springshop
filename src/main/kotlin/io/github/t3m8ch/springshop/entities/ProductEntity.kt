@@ -19,12 +19,12 @@ class ProductEntity(
     val id: UUID = UUID.randomUUID(),
 
     @CreationTimestamp
-    @Column(nullable = false)
-    val createdAt: ZonedDateTime,
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    var createdAt: ZonedDateTime? = null,
 
     @UpdateTimestamp
-    @Column(nullable = false)
-    var updatedAt: ZonedDateTime,
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    var updatedAt: ZonedDateTime? = null,
 
     @Column(nullable = false)
     var title: String,
@@ -40,8 +40,20 @@ class ProductEntity(
     var characteristics: CharacteristicsType,
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    var category: CategoryEntity,
+    @JoinColumn(name = "category_id", nullable = true)
+    var category: CategoryEntity? = null,
 
-    var isRemoved: Boolean = true,
-)
+    var isRemoved: Boolean = false,
+) {
+    @PrePersist
+    fun defineCreatedAt() {
+        val now = ZonedDateTime.now()
+        createdAt = now
+        updatedAt = now
+    }
+
+    @PreUpdate
+    fun refreshUpdatedAt() {
+        updatedAt = ZonedDateTime.now()
+    }
+}

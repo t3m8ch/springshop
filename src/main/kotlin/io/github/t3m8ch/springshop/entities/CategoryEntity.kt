@@ -23,8 +23,8 @@ class CategoryEntity(
     @Column(name = "name_", nullable = false)
     var name: String,
 
-    @OneToMany(mappedBy = "category")
-    var products: List<ProductEntity> = emptyList(),
+    @OneToMany(mappedBy = "category", cascade=[CascadeType.PERSIST])
+    var products: MutableList<ProductEntity> = mutableListOf(),
 
     var isRemoved: Boolean = false,
 ) {
